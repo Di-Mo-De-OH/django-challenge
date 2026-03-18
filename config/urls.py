@@ -22,10 +22,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("todo/",include("todo.urls")),
     path("accounts/",include("user.urls")),
-    
+
     # 과제에 주어진 logout 구현 방법 
-    # path("accounts/",include("django.contrib.auth.urls")),
-    # 위 처럼 작성하고 html에서 url 잡아주면 됌 
-    
+    # path("accounts/",include("django.contrib.auth.urls")), 처럼 작성
+    # 위 처럼 작성하면 accounts/logout/ 의 url 사용 가능 html에서 url 잡아주면 로그아웃 기능 사용가능 아래 처럼
+
+    #<form action="{% url "logout" %}" method="POST">
+                #{% csrf_token %}
+                #<button>로그아웃</button>
     
 ]
