@@ -15,13 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from todo.views import todo_list,todo_info
+from django.urls import path,include
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("todo/",todo_list),
-    path("todo/<int:todo_id>/",todo_info),
-
+    path("todo/",include("todo.urls")),
+    path("accounts/",include("user.urls")),
+    
+    # 과제에 주어진 logout 구현 방법 
+    # path("accounts/",include("django.contrib.auth.urls")),
+    # 위 처럼 작성하고 html에서 url 잡아주면 됌 
+    
     
 ]

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    
+        <div class="todo-page">
+            
+            {% if request.user.is_authenticated %}
+            <div class="top-nav">
+                <nav>
+                    <a href="{% url 'user_logout' %}">로그아웃</a>
+
+                    <p>유저이름- {{request.user.username}}</p>
+                </nav>
+            </diV>
+            <div class="todos">
+                <ul>
+                    {% for todo in todos %}
+
+                        <li><a href="/todo/{{todo.id}}">해야할일 : {{todo.title}}</a></li><br>
+                    {% endfor %}
+                </ul>
+            </div>    
+            {% endif %}    
+        </div>
+    
+
+    
+</body>
+</html>
