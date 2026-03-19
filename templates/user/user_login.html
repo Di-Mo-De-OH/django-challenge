@@ -1,29 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <div class="auth-page">
-        <div class="auth-box" id="login-form">
-            <h1>로그인</h1>
-            <form method="POST">
-                {% csrf_token %}
-                {{form.as_p}}
+{% extends "base.html" %}
 
-                <button>login</button>
+{% block content %}
+    
+        <h1>로그인</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">로그인</button>
         </form>
 
-    <div class="auth-link">
-                <nav>
-                    <a href="{% url 'user_signup' %}">회원가입</a>
-                </nav>
-            </div>
+        <div>
+            <a href="{% url 'user_signup' %}">회원가입</a>
         </div>
-    </div>
-</body>
-</html>
+    
+
+{% endblock %}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    
+        <div class="todo-page">
+            
+            {% if request.user.is_authenticated %}
+            <div class="top-nav">
+                <nav>
+                    <a href="{% url 'todo_create'%}">TO DO 작성하기</a>
+                </nav>
+                <nav>
+                    <form action="{% url 'logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button>로그아웃</button>
+
+                    </form>
+
+                    <p>유저이름- {{request.user.username}}</p>
+                </nav>
+            </diV>
+            <div class="todos">
+                <ul>
+                    {% for todo in page_obj %}
+
+                        <li><a href="/todo/{{todo.id}}">해야할일 : {{todo.title}}</a></li><br>
+                    {% endfor %}
+                </ul>
+            </div>    
+            {% endif %}    
+        </div>
+    
+{% block content %}
+
+
+    {% endblock %}
+    
+</body>
+</html>

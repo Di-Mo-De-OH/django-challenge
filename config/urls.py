@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("todo/",include("todo.urls")),
     path("accounts/",include("user.urls")),
+    path("accounts/",include("django.contrib.auth.urls")),
 
     # 과제에 주어진 logout 구현 방법 
     # path("accounts/",include("django.contrib.auth.urls")), 처럼 작성

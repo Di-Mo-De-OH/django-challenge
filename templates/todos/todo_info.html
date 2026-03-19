@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
     <div class="todo-list">
         {% if request.user.is_authenticated %}
         <h1>할일: {{todo.title}}</h1>
@@ -20,7 +12,10 @@
         </div>    
         {% endif %}
         <a href="{% url 'todo_list' %}">할일 목록으로 돌아가기</a>
+        <a href="{% url 'todo_update' todo.id %}">수정</a>
+        <form action="{%url 'todo_delete' todo.id %}" method="post">
+            {% csrf_token %}
+            <button>삭제하기</button>
+        </form>
     </div>
-    
-</body>
-</html>
+    {% endblock %}

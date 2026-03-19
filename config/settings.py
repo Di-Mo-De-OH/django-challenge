@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'todo',
     "user",
+    "django_extensions",
 ]
 
 MIDDLEWARE = [
@@ -120,3 +121,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+SIGNUP_REDIRECT_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = "/todo/"
+LOGOUT_REDIRECT_URL = "/accounts/login/"
