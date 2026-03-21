@@ -17,7 +17,7 @@ def todo_list(request):
     if q:
         todos = todos.filter(
             Q(title__icontains=q) |
-            Q(content__icontains=q)
+            Q(description__icontains=q)
         )
     page = request.GET.get("page",1)
     paginator = Paginator(todos,10)
