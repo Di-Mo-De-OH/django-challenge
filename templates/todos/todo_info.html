@@ -5,15 +5,16 @@
         <h1>할일: {{todo.title}}</h1>
         <hr>
         <div class="todo">
+        
         <p>설명: {{todo.description}}</p>
         <p>시작시간: {{todo.start_date}}</p>
         <p>끝내는 시간: {{todo.end_date}}</p>
         <p>완료여부: {{todo.is_completed}}</p>
         </div>    
         {% endif %}
-        <a href="{% url 'todo_list' %}">할일 목록으로 돌아가기</a>
-        <a href="{% url 'todo_update' todo.id %}">수정</a>
-        <form action="{%url 'todo_delete' todo.id %}" method="post">
+        <a href="{% url 'todo:list' %}">할일 목록으로 돌아가기</a>
+        <a href="{% url 'todo:update' todo.id %}">수정</a>
+        <form action="{%url 'todo:delete' todo.id %}" method="post">
             {% csrf_token %}
             <button>삭제하기</button>
         </form>

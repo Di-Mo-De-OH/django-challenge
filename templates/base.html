@@ -13,7 +13,7 @@
             {% if request.user.is_authenticated %}
             <div class="top-nav">
                 <nav>
-                    <a href="{% url 'todo_create'%}">TO DO 작성하기</a>
+                    <a href="{% url 'todo:create'%}">TO DO 작성하기</a>
                 </nav>
                 <nav>
                     <form action="{% url 'logout' %}" method="POST">
@@ -29,7 +29,7 @@
                 <ul>
                     {% for todo in page_obj %}
 
-                        <li><a href="{% url 'todo_info' todo.id %}">해야할일 : {{todo.title}}</a></li><br>
+                        <li><a href="{% url 'todo:info' todo.id %}">해야할일 : {{todo.title}}</a></li><br>
                     {% endfor %}
                 </ul>
             </div>    
