@@ -1,13 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div>
-        <h1 >할 일 생성</h1>
+<div class="container mt-5">
+    <div class="mx-auto card shadow-sm border-0 bg-light" style="max-width: 520px;">
+        <div class="card-body p-4">
 
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">생성</button>
-        </form>
+            <h1 class="text-center fw-bold text-dark mb-4">할 일 생성</h1>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="text-dark small">
+                    {{ form.as_p }}
+                </div>
+
+                <div class="d-grid mt-3">
+                    <button type="submit" class="btn btn-primary btn-sm py-2">
+                        생성
+                    </button>
+                </div>
+            </form>
+
+            <hr class="my-4">
+
+            <div class="text-center">
+                <a href="{% url 'todo:list' %}" class="text-decoration-none fw-semibold">
+                    할 일 목록으로 돌아가기
+                </a>
+            </div>
+
+        </div>
     </div>
+</div>
 {% endblock %}

@@ -2,13 +2,28 @@
 
 {% block content %}
 
-<div>
-        <h1>회원가입</h1>
+<div class="container mt-5">
+    <div class="mx-auto card shadow-sm border-0 bg-light" style="max-width: 420px;">
+        <div class="card-body p-4">
 
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">회원가입</button>
-        </form>
+            <h1 class="text-center fw-bold text-dark mb-4">회원가입</h1>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="text-dark small">
+                    {{ form.as_p }}
+                </div>
+
+                <div class="d-grid mt-3">
+                    <button type="submit" class="btn btn-primary btn-sm py-2">
+                        회원가입
+                    </button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
 </div>
 {% endblock %}

@@ -1,18 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-    
-        <h1>로그인</h1>
+<div class="container mt-5">
+    <div class="mx-auto card shadow-sm border-0 bg-light" style="max-width: 420px;">
+        <div class="card-body p-4">
 
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">로그인</button>
-        </form>
+            <h1 class="text-center fw-bold text-dark mb-4">로그인</h1>
 
-        <div>
-            <a href="{% url 'user_signup' %}">회원가입</a>
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="text-dark small">
+                    {{ form.as_p }}
+                </div>
+
+                <div class="d-grid mt-3">
+                    <button type="submit" class="btn btn-primary btn-sm py-2">
+                        로그인
+                    </button>
+                </div>
+            </form>
+
+            <hr class="my-4">
+
+            <div class="text-center">
+                <a href="{% url 'user_signup' %}" class="text-decoration-none fw-semibold">
+                    회원가입 하러가기
+                </a>
+            </div>
+
         </div>
-    
-
+    </div>
+</div>
 {% endblock %}
