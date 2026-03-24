@@ -43,17 +43,18 @@ class ToDoDetailView(LoginRequiredMixin, DetailView):
     queryset = ToDo.objects.all().prefetch_related("comments", "comments__user")
 
     def get_object(self, queryset=None):
-        object = super().get_object(queryset)
-        return object
+        obj = super().get_object(queryset)
+        if obj.user != self.request.user:
+            raise Http404("당신이 볼 수 없는 게시물 입니다")
+        return obj
 
     def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         comments = self.object.comments.order_by("-created_at")
         paginator = Paginator(comments, 5)
-        context = {
-            "todo": self.object.__dict__,
-            "comment_form": CommentCreateForm(),
-            "page_obj": paginator.get_page(self.request.GET.get("page")),
-        }
+        context["todo"] = self.object.__dict__
+        context["comment_form"] = CommentCreateForm()
+        context["page_obj"] = paginator.get_page(self.request.GET.get("page"))
         return context
 
 
@@ -148,7 +149,7 @@ class CommentDeleteView(LoginRequiredMixin,DeleteView):
         return obj
 
     def get_success_url(self):
-        return reverse_lazy("todo:info",kwargs={"pk":self.object.todo.pk})
+        return reverse_lazy("todo:list",kwargs={"pk":self.object.todo.pk})
     
     
     
