@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django_summernote.admin import SummernoteModelAdmin
 
 from .models import Comment, ToDo
 
@@ -15,6 +16,6 @@ class CommentInline(admin.TabularInline):
 
 
 @admin.register(ToDo)
-class ToDoAdmin(admin.ModelAdmin):
+class ToDoAdmin(SummernoteModelAdmin):
     list_display = ("id", "title", "description")
     inlines = [CommentInline]

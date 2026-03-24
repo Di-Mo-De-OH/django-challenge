@@ -22,11 +22,14 @@ urlpatterns = [
         cb_views.CommentCreateView.as_view(),
         name="create_comment",
     ),
-    path("comment/<int:pk>/update/",
+    path(
+        "comment/<int:pk>/update/",
         cb_views.CommentUpdateView.as_view(),
-        name="update_comment",),
-    path("comment/<int:pk>/delete/",
+        name="update_comment",
+    ),
+    path(
+        "comment/<int:pk>/delete/",
         cb_views.CommentDeleteView.as_view(),
-        name="delete_comment",),
-
+        name="delete_comment",
+    ),
 ]

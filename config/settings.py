@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "todo",
     "user",
     "django_extensions",
+    "django_summernote",
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,60 @@ LOGIN_URL = "/account/login"
 SIGNUP_REDIRECT_URL = "/account/login/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/account/login/"
+
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
+
+# sumernote
+SUMMERNOTE_CONFIG = {
+    # Or, you can set it to `False` to use SummernoteInplaceWidget by default - no iframe mode
+    # In this case, you have to load Bootstrap/jQuery sources and dependencies manually.
+    # Use this when you're already using Bootstrap/jQuery based themes.
+    "iframe": True,
+    "attachment_filesize_limit": 5 * 1024 * 1024,
+    # You can put custom Summernote settings
+    "summernote": {
+        # As an example, using Summernote Air-mode
+        "airMode": False,
+        # Change editor size
+        "width": "100%",
+        "height": "480",
+        # Toolbar customization
+        # https://summernote.org/deep-dive/#custom-toolbar-popover
+        "toolbar": [
+            ["style", ["style"]],
+            ["font", ["bold", "underline", "clear"]],
+            ["fontname", ["fontname"]],
+            ["color", ["color"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            # ['table', ['table']],
+            [
+                "insert",
+                [
+                    "link",
+                    "picture",
+                ],
+            ],
+            ["view", ["fullscreen", "help"]],
+        ],
+        # Or, explicitly set language/locale for editor
+        "lang": "ko-KR",
+        "codemirror": {
+            "mode": "htmlmixed",
+            "lineNumbers": "true",
+            # You have to include theme file in 'css' or 'css_for_inplace' before using it.
+            "theme": "monokai",
+        },
+    },
+    # Require users to be authenticated for uploading attachments.
+    "attachment_require_authentication": True,
+    # You can completely disable the attachment feature.
+    "disable_attachment": False,
+    # Set to `False` to return attachment paths in relative URIs.
+    "attachment_absolute_uri": True,
+}
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB

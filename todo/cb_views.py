@@ -12,7 +12,7 @@ from django.views.generic import (
     UpdateView,
 )
 
-from todo.forms import CommentCreateForm
+from todo.forms import CommentCreateForm, ToDoForm, TodoUpdateForm
 from todo.models import Comment, ToDo
 
 
@@ -52,7 +52,7 @@ class ToDoDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         comments = self.object.comments.order_by("-created_at")
         paginator = Paginator(comments, 5)
-        context["todo"] = self.object.__dict__
+        context["todo"] = self.object
         context["comment_form"] = CommentCreateForm()
         context["page_obj"] = paginator.get_page(self.request.GET.get("page"))
         return context
@@ -61,7 +61,7 @@ class ToDoDetailView(LoginRequiredMixin, DetailView):
 class ToDoCreateView(LoginRequiredMixin, CreateView):
     model = ToDo
     template_name = "todos/todo_create.html"
-    fields = ("title", "description", "start_date", "end_date")
+    form_class = ToDoForm
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -76,7 +76,7 @@ class ToDoCreateView(LoginRequiredMixin, CreateView):
 class ToDoUpdateView(LoginRequiredMixin, UpdateView):
     model = ToDo
     template_name = "todos/todo_update.html"
-    fields = ("title", "description", "start_date", "end_date", "is_completed")
+    form_class = TodoUpdateForm
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
@@ -125,31 +125,28 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
         return reverse_lazy("todo:info", kwargs={"pk": self.kwargs["todo_id"]})
 
 
-class CommentUpdateView(LoginRequiredMixin,UpdateView):
+class CommentUpdateView(LoginRequiredMixin, UpdateView):
     model = Comment
-    fields=("message",)
-    
+    fields = ("message",)
 
-    def get_object(self,queryset=None):
+    def get_object(self, queryset=None):
         obj = super().get_object(queryset)
-        if not self.request.user.is_superuser and not obj.user ==self.request.user:
+        if not self.request.user.is_superuser and not obj.user == self.request.user:
             raise Http404("수정할 수 없는 게시물 입니다.")
         return obj
 
     def get_success_url(self):
         return reverse_lazy("todo:info", kwargs={"pk": self.object.todo.pk})
-        
-class CommentDeleteView(LoginRequiredMixin,DeleteView):
+
+
+class CommentDeleteView(LoginRequiredMixin, DeleteView):
     model = Comment
-    
-    def get_object(self, queryset = None):
+
+    def get_object(self, queryset=None):
         obj = super().get_object(queryset)
-        if not self.request.user.is_superuser and not obj.user ==self.request.user:
-            raise Http404("당신이 작성한 댓글이 아닙니다.")        
+        if not self.request.user.is_superuser and not obj.user == self.request.user:
+            raise Http404("당신이 작성한 댓글이 아닙니다.")
         return obj
 
     def get_success_url(self):
-        return reverse_lazy("todo:list",kwargs={"pk":self.object.todo.pk})
-    
-    
-    
+        return reverse_lazy("todo:list")

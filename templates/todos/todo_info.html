@@ -5,9 +5,9 @@
         <div class="mx-auto text-center border rounded shadow-sm p-4" style="max-width: 600px;">
             <h1 class="mb-3 fw-bold text-dark">할일: {{todo.title}}</h1>
         <hr class="mb-4">
+
             <div class="todo">
-        
-                <p class="mb-2"><strong>설명:</strong> {{todo.description}}</p>
+                <p class="mb-2"><strong>설명:</strong> {{todo.description | safe }}</p>
                 <p class="mb-2"><strong>시작시간:</strong> {{todo.start_date}}</p>
                 <p class="mb-2"> <strong>끝내는 시간: </strong>{{todo.end_date}}</p>
                 <p class="mb-0"><strong>완료여부:</strong>
