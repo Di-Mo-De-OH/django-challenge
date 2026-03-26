@@ -19,13 +19,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("todo.urls")),
-    path("account/", include("user.urls")),
-    path("accounts/", include("django.contrib.auth.urls")),
+    path("users/", include("user.urls")),
+    path("logout/", LogoutView.as_view(), name="logout"),
     path("summernote/", include("django_summernote.urls")),
+
 ]
 
 if settings.DEBUG:

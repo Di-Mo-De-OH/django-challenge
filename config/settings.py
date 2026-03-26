@@ -11,16 +11,19 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+with open(BASE_DIR / ".config_secret" / "secret.json") as f:
+    config_secret_str = f.read()
+SECRET = json.loads(config_secret_str)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-thlainbgs)49gj!f4yxm0xo=wtmux^r%!2tqf&@q!+hov76g!x"
+SECRET_KEY = SECRET["DJANGO_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -124,10 +127,10 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-LOGIN_URL = "/account/login"
-SIGNUP_REDIRECT_URL = "/account/login/"
+LOGIN_URL = "/users/login"
+SIGNUP_REDIRECT_URL = "/users/login/"
 LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/account/login/"
+LOGOUT_REDIRECT_URL = "/users/login/"
 
 
 MEDIA_URL = "/media/"
@@ -185,3 +188,16 @@ SUMMERNOTE_CONFIG = {
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
+
+AUTH_USER_MODEL = "user.User"
+
+# Email
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.naver.com"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_PORT = 465
+EMAIL_HOST_USER = SECRET["email"]["HOST_USER"]
+EMAIL_HOST_PASSWORD = SECRET["email"]["PASSWORD"]
+
+
