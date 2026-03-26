@@ -44,7 +44,7 @@ class ToDoDetailView(LoginRequiredMixin, DetailView):
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
-        if obj.user != self.request.user:
+        if obj.user != self.request.user and not self.request.user.is_superuser:
             raise Http404("당신이 볼 수 없는 게시물 입니다")
         return obj
 
@@ -60,7 +60,7 @@ class ToDoDetailView(LoginRequiredMixin, DetailView):
 
 class ToDoCreateView(LoginRequiredMixin, CreateView):
     model = ToDo
-    template_name = "todos/todo_create.html"
+    template_name = "todos/todo_form.html"
     form_class = ToDoForm
 
     def form_valid(self, form):
@@ -75,7 +75,7 @@ class ToDoCreateView(LoginRequiredMixin, CreateView):
 
 class ToDoUpdateView(LoginRequiredMixin, UpdateView):
     model = ToDo
-    template_name = "todos/todo_update.html"
+    template_name = "todos/todo_form.html"
     form_class = TodoUpdateForm
 
     def get_object(self, queryset=None):
@@ -94,11 +94,11 @@ class ToDoDeleteView(LoginRequiredMixin, DeleteView):
     model = ToDo
 
     def get_object(self, queryset=None):
-        object = super().get_object(queryset)
-        if object.user != self.request.user and not self.request.user.is_superuser:
+        obj = super().get_object(queryset)
+        if obj.user != self.request.user and not self.request.user.is_superuser:
             raise Http404("당신이 작성한 게시물이 아니라 삭제할 수 없습니다.")
 
-        return object
+        return obj
 
     def get_success_url(self):
         return reverse_lazy("todo:list")
