@@ -19,6 +19,7 @@ with open(BASE_DIR / ".config_secret" / "secret.json") as f:
     config_secret_str = f.read()
 SECRET = json.loads(config_secret_str)
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
@@ -40,10 +41,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "todo",
-    "user",
-    "django_extensions",
-    "django_summernote",
+    #3rd party
+    "user.apps.UserConfig",
+    "restaurant.apps.RestaurantConfig",
+    "review.apps.ReviewConfig",
+    "rest_framework",
+
+
+    
 ]
 
 MIDDLEWARE = [
@@ -58,10 +63,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "config.urls"
 
+AUTH_USER_MODEL = 'user.UserModel'
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -80,10 +87,14 @@ WSGI_APPLICATION = "config.wsgi.application"
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+   "default":{
+       "ENGINE": SECRET["MYSQL"]["ENGINE"],
+       "NAME": SECRET["MYSQL"]["NAME"],
+       "USER": SECRET["MYSQL"]["USER"],
+       "PASSWORD": SECRET["MYSQL"]["PASSWORD"],
+       "HOST": SECRET["MYSQL"]["HOST"],
+       "PORT": SECRET["MYSQL"]["PORT"]
+   }
 }
 
 
@@ -105,6 +116,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS':
+        'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
@@ -123,81 +140,5 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
-
-LOGIN_URL = "/users/login"
-SIGNUP_REDIRECT_URL = "/users/login/"
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/users/login/"
-
-
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
-
-
-# sumernote
-SUMMERNOTE_CONFIG = {
-    # Or, you can set it to `False` to use SummernoteInplaceWidget by default - no iframe mode
-    # In this case, you have to load Bootstrap/jQuery sources and dependencies manually.
-    # Use this when you're already using Bootstrap/jQuery based themes.
-    "iframe": True,
-    "attachment_filesize_limit": 5 * 1024 * 1024,
-    # You can put custom Summernote settings
-    "summernote": {
-        # As an example, using Summernote Air-mode
-        "airMode": False,
-        # Change editor size
-        "width": "100%",
-        "height": "480",
-        # Toolbar customization
-        # https://summernote.org/deep-dive/#custom-toolbar-popover
-        "toolbar": [
-            ["style", ["style"]],
-            ["font", ["bold", "underline", "clear"]],
-            ["fontname", ["fontname"]],
-            ["color", ["color"]],
-            ["para", ["ul", "ol", "paragraph"]],
-            # ['table', ['table']],
-            [
-                "insert",
-                [
-                    "link",
-                    "picture",
-                ],
-            ],
-            ["view", ["fullscreen", "help"]],
-        ],
-        # Or, explicitly set language/locale for editor
-        "lang": "ko-KR",
-        "codemirror": {
-            "mode": "htmlmixed",
-            "lineNumbers": "true",
-            # You have to include theme file in 'css' or 'css_for_inplace' before using it.
-            "theme": "monokai",
-        },
-    },
-    # Require users to be authenticated for uploading attachments.
-    "attachment_require_authentication": True,
-    # You can completely disable the attachment feature.
-    "disable_attachment": False,
-    # Set to `False` to return attachment paths in relative URIs.
-    "attachment_absolute_uri": True,
-}
-
-DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
-FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
-
-AUTH_USER_MODEL = "user.User"
-
-# Email
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.naver.com"
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
-EMAIL_PORT = 465
-EMAIL_HOST_USER = SECRET["email"]["HOST_USER"]
-EMAIL_HOST_PASSWORD = SECRET["email"]["PASSWORD"]
-
-

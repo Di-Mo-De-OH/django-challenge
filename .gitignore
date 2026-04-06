@@ -1,5 +1,82 @@
-db.sqlite3
-poetry.lock
-pyproject.toml
+# =========================
+# Python 기본
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
 
-.config_secret/*
+# =========================
+# Django / DRF
+# =========================
+*.log
+*.pot
+*.pyc
+
+# SQLite (혹시 쓸 경우 대비)
+db.sqlite3
+*.sqlite3
+
+# Static / Media
+media/
+staticfiles/
+
+# =========================
+# Environment (중요 ⭐)
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Virtual Environment
+# =========================
+venv/
+.venv/
+
+# =========================
+# Poetry
+# =========================
+# 👉 과제/협업이면 이 줄 지우세요 (포함 권장)
+# poetry.lock
+
+# =========================
+# MySQL 관련
+# =========================
+# DB dump 파일 (절대 올리면 안됨)
+*.sql
+*.dump
+
+# 로컬 MySQL 데이터 디렉토리 (docker volume 등)
+mysql_data/
+db_data/
+
+# =========================
+# VSCode / IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# OS 파일
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# 테스트 / 캐시
+# =========================
+.pytest_cache/
+.coverage
+htmlcov/
+
+# =========================
+# Docker
+# =========================
+docker-compose.override.yml
+
+# =========================
+# 기타
+# =========================
+*.bak
+*.swp
+.config_secret/
