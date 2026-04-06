@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import UserModel
+from user.models import UserModel
 # Create your tests here.
 
 class UserModelTest(TestCase):

@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from restaurant.models import RestaurantModel
 from user.models import UserModel
-from.models import ReviewModel
+from review.models import ReviewModel
 # Create your tests here.
 
 

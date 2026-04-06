@@ -18,9 +18,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 
+
+
+
+
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     # restaurant
     path("api/v1/",include("restaurant.urls")),
+    #user
+    path("api/v1/",include("user.urls")),
+    path("api/v1/",include("review.urls")),
 
 ]

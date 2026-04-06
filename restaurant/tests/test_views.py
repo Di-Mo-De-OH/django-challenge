@@ -17,6 +17,13 @@ class RestaurantViewTests(TestCase):
             "last_order": "18:00:00",
             "regular_holiday": "MON",
         }
+        self.user = UserModel.objects.create_user(
+            nickname ="test",
+            email = "test@test.com",
+            password = "testpassword1",
+        )
+        self.client.login(email='test@test.com', password='testpassword1')
+
     def test_restaurant_list_view(self):
         url = reverse('restaurant-list')
         RestaurantModel.objects.create(**self.restaurant)
@@ -34,7 +41,7 @@ class RestaurantViewTests(TestCase):
 
     def test_restaurant_post_view(self):
         url = reverse("restaurant-list")
-        response = self.client.post(url,self.restaurant,format="json")
+        response = self.client.post(url,self.restaurant,content_type="application/json")
         self.assertEqual(response.status_code, 201)
         self.assertEqual(RestaurantModel.objects.count(),1)
         self.assertEqual(RestaurantModel.objects.first().name,self.restaurant["name"])
